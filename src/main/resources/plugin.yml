@@ -1,0 +1,20 @@
+name: SantaPlugin
+version: 0.0.0
+main: com.github.madjichan.santaplugin.SantaPlugin
+description: Plugin that add Santa to your server
+author: madjichan
+website: https://github.com/madjichan
+api-version: '1.21.4'
+permissions:
+  santaevent:
+    description: "Permission for activity related to santa event"
+    default: op
+commands:
+  santa:
+    description: "Command for santa control"
+    permission: santaevent
+    permission-message: "You do not have permission to control santa"
+  present:
+    description: "Command for santa control"
+    permission: santaevent
+    permission-message: "You do not have permission to control presents"

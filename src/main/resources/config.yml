@@ -1,0 +1,41 @@
+santa:
+  placement:
+    marker:
+      dx: 0.0
+      dy: 3.0
+    components:
+      - name: "FIRST"
+        entity: HORSE
+        dx: 1.0
+        dy: 0.0
+      - name: "SECOND"
+        entity: HORSE
+        dx: -1.0
+        dy: 0.0
+      - name: "THIRD"
+        entity: HORSE
+        dx: 1.0
+        dy: 1.0
+      - name: "FOURTH"
+        entity: HORSE
+        dx: -1.0
+        dy: 1.0
+  speed: 2
+  rotationRadius: 5
+  presentDropPeriod: 2
+present:
+  lootTable:
+    - material: DIAMOND
+      materialWeight: 1
+      itemTable:
+        - count: 1
+          itemWeight: 1
+    - material: ACACIA_LOG
+      materialWeight: 4
+      itemTable:
+          - count: 3
+            itemWeight: 1
+          - count: 2
+            itemWeight: 2
+          - count: 1
+            itemWeight: 3
