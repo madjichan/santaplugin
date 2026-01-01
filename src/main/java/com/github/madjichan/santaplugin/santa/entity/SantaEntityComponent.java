@@ -1,12 +1,10 @@
 package com.github.madjichan.santaplugin.santa.entity;
 
 import com.github.madjichan.santaplugin.santa.coordinator.CoordinatorSlave;
-import com.github.madjichan.santaplugin.util.DoMath;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.util.Vector;
 
@@ -33,12 +31,11 @@ public class SantaEntityComponent implements CoordinatorSlave {
 
     @Override
     public void setVelocity(Vector strength) {
-        /*Location loc = this.ent.getLocation().clone();
-        Vector dir = strength.normalize();
-        loc.setDirection(dir);
-        this.ent.teleport(loc);*/
-
         this.ent.setVelocity(strength);
+
+        Location tmp = new Location(this.ent.getWorld(), 0.0, 0.0, 0.0);
+        tmp.setDirection(strength);
+        this.ent.setRotation(tmp.getYaw(), tmp.getPitch());
     }
 
     @Override
