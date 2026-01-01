@@ -1,6 +1,7 @@
 package com.github.madjichan.santaplugin.config;
 
-import com.github.madjichan.santaplugin.present.PresentLoot;
+import com.github.madjichan.santaplugin.present.loot.PresentLoot;
+import com.github.madjichan.santaplugin.present.loot.PresentLootHandler;
 import com.github.madjichan.santaplugin.santa.entity.SantaEntity;
 import org.bukkit.Color;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,7 +16,7 @@ public class SantaConfiguration {
     public double speed;
     public double rotationRadius;
     public double presentDropPeriod;
-    public List<PresentLoot.TableRecord> table;
+    public PresentLoot<ItemStackConfiguration> loot;
     public String presentTextureLink;
     public SantaEntity.SantaComponent marker;
     public SantaEntity.SantaComponent[] santaComponents;
@@ -44,6 +45,27 @@ public class SantaConfiguration {
 
         int rgb = Integer.parseInt(hex, 16);
         return Color.fromRGB(rgb);
+    }
+
+    public static PresentLoot<ItemStackConfiguration> parseTable(List<Map<?, ?>> config) {
+        List<PresentLoot.TableRecord<ItemStackConfiguration>> res = new ArrayList<>();
+
+        for(Map<?, ?> section: config) {
+            int weight = (int) section.get("weight");
+            PresentLootHandler<ItemStackConfiguration> el;
+
+            if(section.containsKey("table")) {
+                el = parseTable((List<Map<?, ?>>) section.get("table"));
+            } else if(section.containsKey("generator")) {
+                el = new PresentLoot.ResultWrapper<>(ItemStackConfiguration.parse(section));
+            } else {
+                el = new PresentLoot.ResultWrapper<>(ItemStackConfiguration.parse(section));
+            }
+
+            res.add(new PresentLoot.TableRecord<>(weight, el));
+        }
+
+        return new PresentLoot<ItemStackConfiguration>(res);
     }
 
     public static SantaConfiguration parse(FileConfiguration config) {
@@ -82,24 +104,7 @@ public class SantaConfiguration {
         res.presentDropPeriod = config.getDouble("santa.presentDropPeriod");
         res.presentTextureLink = config.getString("present.texture");
 
-        res.table = new ArrayList<>();
-        List<Map<?, ?>> lootTable = config.getMapList("present.lootTable");
-        for(Map<?, ?> tableEntry: lootTable) {
-            Material material = Material.matchMaterial((String) tableEntry.get("material"));
-            int materialWeight = (int) tableEntry.get("materialWeight");
-            PresentLoot.PresentMaterialRecord materialRecord = new PresentLoot.PresentMaterialRecord(material, materialWeight);
-
-            List<Map<?, ?>> itemTable = (List<Map<?, ?>>) tableEntry.get("itemTable");
-            PresentLoot.PresentItemRecord[] itemRecords = new PresentLoot.PresentItemRecord[itemTable.size()];
-            for(int i=0; i<itemTable.size(); i++) {
-                int count = (int) itemTable.get(i).get("count");
-                int itemWeight = (int) itemTable.get(i).get("itemWeight");
-
-                itemRecords[i] = new PresentLoot.PresentItemRecord(count, itemWeight);
-            }
-
-            res.table.add(new PresentLoot.TableRecord(materialRecord, itemRecords));
-        }
+        res.loot = parseTable(config.getMapList("present.lootTable"));
 
         SantaConfiguration.config = res;
         return res;

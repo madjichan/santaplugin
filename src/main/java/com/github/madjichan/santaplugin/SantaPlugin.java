@@ -2,7 +2,6 @@ package com.github.madjichan.santaplugin;
 
 import com.github.madjichan.santaplugin.config.EntityConfiguration;
 import com.github.madjichan.santaplugin.config.SantaConfiguration;
-import com.github.madjichan.santaplugin.present.PresentLoot;
 import com.github.madjichan.santaplugin.present.Presents;
 import com.github.madjichan.santaplugin.santa.Santa;
 import com.github.madjichan.santaplugin.santa.trajectory.LineTrajectory;
@@ -36,15 +35,7 @@ public final class SantaPlugin extends JavaPlugin {
 
         Presents initPresents = Presents.getInstance(this);
 
-        /* PresentLoot.PresentMaterialRecord diamondLoot = new PresentLoot.PresentMaterialRecord(Material.DIAMOND, 1);
-        PresentLoot.PresentMaterialRecord AcaciaLogLoot = new PresentLoot.PresentMaterialRecord(Material.ACACIA_LOG, 4);
-        PresentLoot.PresentItemRecord[] diamondItemLoot = new PresentLoot.PresentItemRecord[] {new PresentLoot.PresentItemRecord(1, 1)};
-        PresentLoot.PresentItemRecord[] AcaciaLogItemLoot = new PresentLoot.PresentItemRecord[] {new PresentLoot.PresentItemRecord(3, 1), new PresentLoot.PresentItemRecord(2, 2), new PresentLoot.PresentItemRecord(1, 3)};
-        PresentLoot loot = new PresentLoot(new PresentLoot.PresentMaterialRecord[] {diamondLoot,AcaciaLogLoot}, new PresentLoot.PresentItemRecord[][] {diamondItemLoot, AcaciaLogItemLoot}); */
-        // initPresents.setLootGenerator(loot);
-
-        PresentLoot loot = new PresentLoot(config.table);
-        initPresents.setLootGenerator(loot);
+        initPresents.setLootGenerator(config.loot);
 
         LiteralArgumentBuilder<CommandSourceStack> santa_cmd, santaSpawn_cmd, santaStart_cmd,
                 santaStartLine_cmd, santaStartRotation_cmd, santaStartSquare_cmd, santaStop_cmd;

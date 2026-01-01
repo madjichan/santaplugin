@@ -3,6 +3,7 @@ package com.github.madjichan.santaplugin.present;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.github.madjichan.santaplugin.config.SantaConfiguration;
 import com.github.madjichan.santaplugin.config.ItemStackConfiguration;
+import com.github.madjichan.santaplugin.present.loot.PresentLoot;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,7 +38,7 @@ public class Presents implements Listener {
     private static Presents instance;
     private final JavaPlugin plugin;
     private final NamespacedKey presentFallingKey, presentLyingKey;
-    private PresentLoot loot;
+    private PresentLoot<ItemStackConfiguration> loot;
     private ItemStack presentHead;
 
     private Presents(JavaPlugin plugin) {
@@ -69,7 +70,7 @@ public class Presents implements Listener {
         return Presents.instance;
     }
 
-    public void setLootGenerator(PresentLoot loot) {
+    public void setLootGenerator(PresentLoot<ItemStackConfiguration> loot) {
         this.loot = loot;
     }
     

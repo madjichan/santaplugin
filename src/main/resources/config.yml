@@ -215,17 +215,16 @@ santa:
 present:
   texture: "http://textures.minecraft.net/texture/47e55fcc809a2ac1861da2a67f7f31bd7237887d162eca1eda526a7512a64910"
   lootTable:
-    - material: DIAMOND
-      materialWeight: 1
-      itemTable:
-        - count: 1
-          itemWeight: 1
-    - material: ACACIA_LOG
-      materialWeight: 4
-      itemTable:
-          - count: 3
-            itemWeight: 1
-          - count: 2
-            itemWeight: 2
-          - count: 1
-            itemWeight: 3
+    - weight: 5
+      table:
+        - weight: 3
+          tag: diamond
+          amount: 1
+        - weight: 2
+          tag: diamond
+          amount: 2
+        - weight: 1
+          tag: diamond
+          amount: 3
+    - weight: 1
+      tag: grandmas_sweater
