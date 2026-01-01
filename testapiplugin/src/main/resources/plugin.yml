@@ -1,0 +1,5 @@
+name: OtherPlugin
+version: 0.0.0
+main: com.github.madjichan.testapiplugin.TestAPIPlugin
+api-version: 1.21
+depend: [ SantaPlugin ]
