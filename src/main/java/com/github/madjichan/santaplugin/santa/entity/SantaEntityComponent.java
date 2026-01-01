@@ -1,6 +1,6 @@
 package com.github.madjichan.santaplugin.santa.entity;
 
-import com.github.madjichan.santaplugin.santa.coordinator.CoordinatorSlave;
+import com.github.madjichan.santaplugin.santa.coordinator.SantaCoordinator;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -8,7 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
 import org.bukkit.util.Vector;
 
-public class SantaEntityComponent implements CoordinatorSlave {
+public class SantaEntityComponent implements SantaCoordinator.CoordinatorSlave {
     private Entity ent;
 
     private SantaEntityComponent() {

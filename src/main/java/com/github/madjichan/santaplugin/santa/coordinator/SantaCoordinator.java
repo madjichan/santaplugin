@@ -12,6 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SantaCoordinator implements Runnable {
+    public interface CoordinatorSlave {
+        void setVelocity(Vector strength);
+        Location getLocation();
+        void startEvent();
+        void stopEvent();
+    }
+
     private record RelatedPosition(Vector delta, int tickDelta) {}
     private record PointCacheRecord(Location loc) {}
 

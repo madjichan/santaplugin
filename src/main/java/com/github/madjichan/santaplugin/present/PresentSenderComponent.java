@@ -1,6 +1,6 @@
 package com.github.madjichan.santaplugin.present;
 
-import com.github.madjichan.santaplugin.santa.coordinator.CoordinatorSlave;
+import com.github.madjichan.santaplugin.santa.coordinator.SantaCoordinator;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
@@ -10,7 +10,7 @@ import org.bukkit.util.Vector;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class PresentSenderComponent implements CoordinatorSlave, Runnable {
+public class PresentSenderComponent implements SantaCoordinator.CoordinatorSlave, Runnable {
     private ArmorStand marker;
     private JavaPlugin plugin;
     private BukkitTask task;
