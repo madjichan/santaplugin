@@ -1,5 +1,7 @@
 package com.github.madjichan.santaplugin.present;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.github.madjichan.santaplugin.config.SantaConfiguration;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,10 +19,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.profile.PlayerTextures;
+
+import java.net.URI;
+import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -29,11 +36,27 @@ public class Presents implements Listener {
     private final JavaPlugin plugin;
     private final NamespacedKey presentFallingKey, presentLyingKey;
     private PresentLoot loot;
+    private ItemStack presentHead;
 
     private Presents(JavaPlugin plugin) {
         this.plugin = plugin;
         this.presentFallingKey = new NamespacedKey(this.plugin, "fallingPresent");
         this.presentLyingKey = new NamespacedKey(this.plugin, "lyingPresent");
+
+        PlayerProfile profile = org.bukkit.Bukkit.createProfile(UUID.randomUUID());
+        PlayerTextures textures = profile.getTextures();
+        try {
+            textures.setSkin((new URI(SantaConfiguration.getInstance().presentTextureLink)).toURL());
+        } catch (Exception ex) {
+            // nothing
+        }
+        profile.setTextures(textures);
+        profile.complete(true);
+
+        this.presentHead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) this.presentHead.getItemMeta();
+        meta.setPlayerProfile(profile);
+        this.presentHead.setItemMeta(meta);
     }
 
     public static Presents getInstance(JavaPlugin plugin) {
@@ -58,7 +81,7 @@ public class Presents implements Listener {
         armorStand.customName(Component.text("OPEN ME"));
         armorStand.setCustomNameVisible(true);
         armorStand.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, Integer.MAX_VALUE, 0, false, false));
-        armorStand.getEquipment().setHelmet(new ItemStack(Material.SKELETON_SKULL));
+        armorStand.getEquipment().setHelmet(this.presentHead.clone());
         armorStand.getPersistentDataContainer().set(this.presentFallingKey, PersistentDataType.BOOLEAN, true);
     }
 
@@ -75,7 +98,7 @@ public class Presents implements Listener {
 
         getServer().broadcast(Component.text("TAKE"));
 
-        ItemStack presentItem = new ItemStack(Material.SKELETON_SKULL);
+        ItemStack presentItem = new ItemStack(this.presentHead.clone());
         presentItem.editPersistentDataContainer(pdc -> {
             pdc.set(this.presentLyingKey, PersistentDataType.BOOLEAN, true);
         });

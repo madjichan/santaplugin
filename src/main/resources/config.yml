@@ -24,6 +24,7 @@ santa:
   rotationRadius: 5
   presentDropPeriod: 2
 present:
+  texture: "http://textures.minecraft.net/texture/47e55fcc809a2ac1861da2a67f7f31bd7237887d162eca1eda526a7512a64910"
   lootTable:
     - material: DIAMOND
       materialWeight: 1

@@ -15,6 +15,7 @@ public class SantaConfiguration {
     public double rotationRadius;
     public double presentDropPeriod;
     public List<PresentLoot.TableRecord> table;
+    public String presentTextureLink;
     public SantaEntity.SantaComponent marker;
     public SantaEntity.SantaComponent[] santaComponents;
     private static SantaConfiguration config;
@@ -49,6 +50,7 @@ public class SantaConfiguration {
         res.speed = config.getDouble("santa.speed");
         res.rotationRadius = config.getDouble("santa.rotationRadius");
         res.presentDropPeriod = config.getDouble("santa.presentDropPeriod");
+        res.presentTextureLink = config.getString("present.texture");
 
         res.table = new ArrayList<>();
         List<Map<?, ?>> lootTable = config.getMapList("present.lootTable");
