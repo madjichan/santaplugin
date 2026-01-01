@@ -1,5 +1,6 @@
 package com.github.madjichan.santaplugin;
 
+import com.github.madjichan.santaplugin.config.EntityConfiguration;
 import com.github.madjichan.santaplugin.config.SantaConfiguration;
 import com.github.madjichan.santaplugin.present.PresentLoot;
 import com.github.madjichan.santaplugin.present.Presents;
@@ -9,6 +10,7 @@ import com.github.madjichan.santaplugin.santa.trajectory.RotateTrajectory;
 import com.github.madjichan.santaplugin.santa.trajectory.SquareTrajectory;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -18,6 +20,7 @@ import io.papermc.paper.math.FinePosition;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -158,9 +161,41 @@ public final class SantaPlugin extends JavaPlugin {
 
         present_cmd = Commands.literal("present").then(presentSpawn_cmd);
 
+        LiteralArgumentBuilder<CommandSourceStack> giveItemFromConfig_cmd, summonEntityFromConfig_cmd;
+
+        giveItemFromConfig_cmd = Commands.literal("giveitemfromconfig").then(Commands.argument("tagName", StringArgumentType.word()).executes(ctx -> {
+            CommandSender sender = ctx.getSource().getSender();
+            if(!(sender instanceof Player player)) {
+                return Command.SINGLE_SUCCESS;
+            }
+
+            String tagName = ctx.getArgument("tagName", String.class);
+
+            player.give(SantaConfiguration.getInstance().items.get(tagName).configure(null));
+
+            return Command.SINGLE_SUCCESS;
+        }));
+
+        summonEntityFromConfig_cmd = Commands.literal("summonentityfromconfig").then(Commands.argument("tagName", StringArgumentType.word()).executes(ctx -> {
+            CommandSender sender = ctx.getSource().getSender();
+            if(!(sender instanceof Player player)) {
+                return Command.SINGLE_SUCCESS;
+            }
+
+            String tagName = ctx.getArgument("tagName", String.class);
+
+            EntityConfiguration entConfig = SantaConfiguration.getInstance().entities.get(tagName);
+            Entity nEnt = player.getWorld().spawnEntity(player.getLocation(), entConfig.getEntityType());
+            entConfig.configure(nEnt);
+
+            return Command.SINGLE_SUCCESS;
+        }));
+
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             commands.registrar().register(santa_cmd.build());
             commands.registrar().register(present_cmd.build());
+            commands.registrar().register(giveItemFromConfig_cmd.build());
+            commands.registrar().register(summonEntityFromConfig_cmd.build());
         });
     }
 }

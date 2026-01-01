@@ -1,3 +1,192 @@
+items:
+  - tag: diamond
+    material: DIAMOND
+    amount: 1
+
+    name: "<blue>DiAmOnD"
+    lore:
+      - "<yellow>This is"
+      - "<red>Lore"
+
+    enchantments:
+      - name: sharpness
+        level: 1
+
+    unbreakable: true
+  - tag: grandmas_sweater
+    material: LEATHER_CHESTPLATE
+    amount: 1
+
+    name: "<red> Бабушкин свитер"
+    lore:
+      - "<yellow> Дарит тепло и уют"
+
+    enchantments:
+      - name: fire_protection
+        level: 10
+
+    color: "#FF0000"
+    damage: 50
+    repairCost: 1
+
+  - tag: player_head
+    material: PLAYER_HEAD
+    amount: 1
+    generator: "OtherPlugin:com.github.madjichan.testapiplugin.MyGenerator"
+
+  - tag: armor
+    material: IRON_CHESTPLATE
+    amount: 1
+    armor:
+      material: amethyst
+      pattern: host
+  - tag: armor_stand
+    material: ARMOR_STAND
+    amount: 1
+    armorStand:
+      invisible: false
+      marker: false
+      noBasePlate: true
+      showArms: true
+      small: true
+  - tag: axolotl_bucket
+    material: AXOLOTL_BUCKET
+    amount: 1
+    axolotlVariant: LUCY
+  - tag: banner
+    material: CYAN_BANNER
+    amount: 1
+    bannerPatterns:
+      - type: base
+        color: CYAN
+      - type: mojang
+        color: MAGENTA
+  - tag: book
+    material: WRITTEN_BOOK
+    amount: 1
+    book:
+      title: "<red> Великая сага"
+      author: "<yellow> Me"
+      pages:
+        - |
+          I'm the gradest of greadest
+          <red>Nobody can stop me
+        - |
+          Nooooooooo.... <blue>How?
+  - tag: bundle
+    material: BUNDLE
+    amount: 1
+    bundleItems:
+      - tag: diamond
+        amount: 4
+      - tag: grandmas_sweater
+        amount: 2
+  - tag: compass
+    material: COMPASS
+    amount: 1
+    compassTracked: true
+    compassAt:
+      world: world
+      x: 0.0
+      y: 0.0
+      z: 0.0
+  - tag: crossbow
+    material: CROSSBOW
+    amount: 1
+    crossbowItems:
+      - tag: firework
+  - tag: enchantment_storage
+    material: ENCHANTED_BOOK
+    amount: 1
+    enchantmentStorage:
+      - name: sharpness
+        level: 10
+      - name: fire_protection
+        level: 5
+  - tag: firework_effect
+    material: FIREWORK_STAR
+    amount: 1
+    fireworkEffect:
+      flicker: true
+      trail: true
+      type: CREEPER
+      colors:
+        - "#FF0000"
+        - "#00FF00"
+      fades:
+        - "#FFFF00"
+        - "#00FFFF"
+  - tag: firework
+    material: FIREWORK_ROCKET
+    amount: 1
+    power: 5
+    effects:
+      - flicker: true
+        trail: true
+        type: CREEPER
+        colors:
+          - "#FF0000"
+          - "#00FF00"
+        fades:
+          - "#FFFF00"
+          - "#00FFFF"
+  - tag: music_instrument
+    material: GOAT_HORN
+    amount: 1
+    musicInstrument: dream_goat_horn
+  - tag: ominous_bottle
+    material: OMINOUS_BOTTLE
+    amount: 1
+    ominousAmplifier: 3
+  - tag: potion
+    material: POTION
+    amount: 1
+    potion:
+      customName: "<red> BAD OMEN"
+      color: "#FF0000"
+      baseType: LUCK
+      effects:
+        - type: bad_omen
+          duration: 60
+          amplifier: 2
+          ambient: true
+          particles: true
+          icon: true
+  - tag: shield
+    material: SHIELD
+    amount: 1
+    shieldColor: GRAY
+  - tag: suspicious_stew
+    material: SUSPICIOUS_STEW
+    amount: 1
+    suspiciousStewEffects:
+      - type: bad_omen
+        duration: 60
+        amplifier: 2
+        ambient: true
+        particles: true
+        icon: true
+  - tag: tropical_fish
+    material: TROPICAL_FISH_BUCKET
+    amount: 1
+    tropicalFish:
+      bodyColor: MAGENTA
+      patternColor: ORANGE
+      pattern: FLOPPER
+  - tag: writable_book
+    material: WRITABLE_BOOK
+    amount: 1
+    pages:
+      - |
+        I'm the gradest of greadest
+        Nobody can stop me
+      - |
+        Nooooooooo.... How?
+
+entities:
+  - tag: horse
+    type: HORSE
+
 santa:
   placement:
     marker:

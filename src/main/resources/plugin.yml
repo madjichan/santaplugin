@@ -18,3 +18,11 @@ commands:
     description: "Command for santa control"
     permission: santaevent
     permission-message: "You do not have permission to control presents"
+  giveitemfromconfig:
+    description: "Get item by tag using info from config file"
+    permission: santaevent
+    permission-message: "You do not have permission to give item"
+  summonentityfromconfig:
+    description: "Summon entity by tag using info from config file"
+    permission: santaevent
+    permission-message: "You do not have permission to summon entity"

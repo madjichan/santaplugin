@@ -2,11 +2,12 @@ package com.github.madjichan.santaplugin.config;
 
 import com.github.madjichan.santaplugin.present.PresentLoot;
 import com.github.madjichan.santaplugin.santa.entity.SantaEntity;
-import org.bukkit.Material;
+import org.bukkit.Color;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +21,45 @@ public class SantaConfiguration {
     public SantaEntity.SantaComponent[] santaComponents;
     private static SantaConfiguration config;
 
-    private SantaConfiguration() {
+    public Map<String, ItemStackConfiguration> items;
+    public Map<String, EntityConfiguration> entities;
 
+    private SantaConfiguration() {
+        this.items = new HashMap<>();
+        this.entities = new HashMap<>();
     }
 
     public static SantaConfiguration getInstance() {
         return SantaConfiguration.config;
     }
 
+    public static Color hexToColor(String hex) {
+        if (hex.startsWith("#")) {
+            hex = hex.substring(1);
+        }
+
+        if (hex.length() != 6) {
+            throw new IllegalArgumentException("Invalid hex color: " + hex);
+        }
+
+        int rgb = Integer.parseInt(hex, 16);
+        return Color.fromRGB(rgb);
+    }
+
     public static SantaConfiguration parse(FileConfiguration config) {
         SantaConfiguration res = new SantaConfiguration();
+
+        List<Map<?, ?>> configItems = config.getMapList("items");
+        for(Map<?, ?> configItem: configItems) {
+            ItemStackConfiguration nItem = ItemStackConfiguration.parse(configItem);
+            res.items.put(nItem.getTagName(), nItem);
+        }
+
+        List<Map<?, ?>> configEntities = config.getMapList("entities");
+        for(Map<?, ?> configEntity: configEntities) {
+            EntityConfiguration nEnt = EntityConfiguration.parse(configEntity);
+            res.entities.put(nEnt.getTagName(), nEnt);
+        }
 
         double marker_dx = config.getDouble("santa.placement.marker.dx");
         double marker_dy = config.getDouble("santa.placement.marker.dy");

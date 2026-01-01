@@ -2,6 +2,7 @@ package com.github.madjichan.santaplugin.present;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.github.madjichan.santaplugin.config.SantaConfiguration;
+import com.github.madjichan.santaplugin.config.ItemStackConfiguration;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -170,8 +171,9 @@ public class Presents implements Listener {
             });
             block.getWorld().dropItemNaturally(block.getLocation(), drop);
         } else {
-            PresentLoot.GenerateResult genRes = this.loot.gen();
-            ItemStack drop = new ItemStack(genRes.material(), genRes.itemCount());
+            ItemStackConfiguration itemConfig = this.loot.gen();
+            ItemStack drop = SantaConfiguration.getInstance().items.get(itemConfig.getTagName()).configure(null);
+            drop = itemConfig.configure(drop);
             block.getWorld().dropItemNaturally(block.getLocation(), drop);
         }
     }
