@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -83,6 +84,17 @@ public class Presents implements Listener {
         armorStand.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, Integer.MAX_VALUE, 0, false, false));
         armorStand.getEquipment().setHelmet(this.presentHead.clone());
         armorStand.getPersistentDataContainer().set(this.presentFallingKey, PersistentDataType.BOOLEAN, true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPresentManipulate(PlayerArmorStandManipulateEvent event) {
+        ArmorStand armorStandEntity = event.getRightClicked();
+
+        if(!armorStandEntity.getPersistentDataContainer().has(this.presentFallingKey)) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 
     @EventHandler
